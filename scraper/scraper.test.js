@@ -62,6 +62,12 @@ test('Reed parser reads a job card', () => {
   });
 });
 
+test('Reed reads only jobs added in the last three days', () => {
+  const reed = SITES.find((s) => s.id === 'reed');
+  assert.equal(reed.pageUrl(2), 'https://www.reed.co.uk/jobs?dateCreatedOffSet=lastthreedays&pageno=2');
+  assert.equal(reed.seenPagesToStop, 3);
+});
+
 test('Work Hub parser skips copied NHS Jobs adverts', () => {
   const workHub = SITES.find((s) => s.id === 'workhub');
   const card = (id, employer) => `<div data-testid="searchResultCard-${id}">

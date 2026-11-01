@@ -38,6 +38,9 @@ async function crawlSite(site, { seen, stopDay }) {
   const concurrency = concurrencyOverride ?? site.concurrency;
   let lastLogged = 0;
   let oldPages = 0;
+  let repeatPages = 0;
+  // ids read in this crawl, new or not, to spot pages that only repeat earlier ones
+  const seenThisRun = new Set();
 
   // pages are fetched a few at a time but read in page order, so stopping works as it would one by one
   batches: for (let first = 1; first <= maxPages; first += concurrency) {
@@ -71,12 +74,15 @@ async function crawlSite(site, { seen, stopDay }) {
       }
 
       let newestDay = '';
+      let freshOnPage = 0;
       for (const job of parsed.jobs) {
         result.found++;
         // a job with no posting date counts from the day we first saw it
         const day = job.postedAt ? job.postedAt.slice(0, 10) : today;
         if (day > newestDay) newestDay = day;
         const id = `${site.id}-${job.id}`;
+        if (!seenThisRun.has(id)) freshOnPage++;
+        seenThisRun.add(id);
         if (seen.has(id)) continue;
         seen.add(id);
         postings.push({ id, s: site.id, t: cleanTitle(job.title, job.location), e: job.employer, d: day });
@@ -85,6 +91,9 @@ async function crawlSite(site, { seen, stopDay }) {
       // after several old pages in a row
       oldPages = newestDay && newestDay < stopDay ? oldPages + 1 : 0;
       if (site.sortedByDate && oldPages >= (site.oldPagesToStop ?? 3)) break batches;
+      // sites that repeat earlier results past their end (Reed) stop after a run of repeat pages
+      repeatPages = freshOnPage === 0 ? repeatPages + 1 : 0;
+      if (site.seenPagesToStop && repeatPages >= site.seenPagesToStop) break batches;
     }
 
     if (result.pages - lastLogged >= 100) {

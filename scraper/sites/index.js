@@ -17,12 +17,15 @@ const reed = {
   id: 'reed',
   name: 'Reed',
   url: 'https://www.reed.co.uk',
-  // Reed can't be sorted by date from a link, so the whole listing is read every day
+  // Reed stops serving new results after its first ~10,000 of a search, so we read only jobs
+  // added in the last three days (about 7,500, 250 pages), all of them each day
   sortedByDate: false,
-  maxPages: 6000,
+  maxPages: 400,
+  // past the end Reed repeats earlier results instead of an empty page
+  seenPagesToStop: 3,
   concurrency: 6,
   delayMs: 250,
-  pageUrl: (n) => `https://www.reed.co.uk/jobs?pageno=${n}`,
+  pageUrl: (n) => `https://www.reed.co.uk/jobs?dateCreatedOffSet=lastthreedays&pageno=${n}`,
   parse(html, now) {
     const document = parseDocument(html);
     const cards = Array.from(document.querySelectorAll('article[data-qa="job-card"]'));
