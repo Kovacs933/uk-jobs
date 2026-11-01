@@ -3,4 +3,4 @@
 // Locally (tools/serve.js) the data folder next to the site is used instead.
 window.DATA_BASE = ['localhost', '127.0.0.1'].includes(location.hostname)
   ? '/site-data/'
-  : 'https://raw.githubusercontent.com/GITHUB_USER/uk-jobs/main/site-data/';
+  : 'https://raw.githubusercontent.com/Kovacs933/uk-jobs/main/site-data/';
