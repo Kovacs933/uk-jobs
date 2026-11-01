@@ -237,6 +237,11 @@ tr.employers td {
   cursor: pointer;
 }
 
+.more[hidden],
+.empty[hidden] {
+  display: none;
+}
+
 .empty {
   text-align: center;
   color: var(--muted);
