@@ -1,0 +1,56 @@
+{
+  "reed": {
+    "name": "Reed",
+    "lastRun": "2026-11-01T15:35:27.616Z",
+    "lastOk": "2026-11-01",
+    "pages": 6000,
+    "found": 162000,
+    "status": "ok",
+    "new": 10018
+  },
+  "workhub": {
+    "name": "GOV.UK Work Hub",
+    "lastRun": "2026-11-01T15:35:27.616Z",
+    "pages": 0,
+    "found": 0,
+    "status": "error",
+    "error": "blocked (403) at https://www.jobs.service.gov.uk/jobs/search?sortOption=DATE&resultsPerPage=30&pageNumber=1",
+    "new": 0
+  },
+  "nhs": {
+    "name": "NHS Jobs",
+    "lastRun": "2026-11-01T15:35:27.616Z",
+    "lastOk": "2026-11-01",
+    "pages": 1077,
+    "found": 10770,
+    "status": "ok",
+    "new": 10770
+  },
+  "charityjob": {
+    "name": "CharityJob",
+    "lastRun": "2026-11-01T15:35:27.616Z",
+    "lastOk": "2026-11-01",
+    "pages": 118,
+    "found": 1753,
+    "status": "ok",
+    "new": 1753
+  },
+  "jobsacuk": {
+    "name": "jobs.ac.uk",
+    "lastRun": "2026-11-01T15:35:27.616Z",
+    "lastOk": "2026-11-01",
+    "pages": 59,
+    "found": 1450,
+    "status": "ok",
+    "new": 1450
+  },
+  "simplyhired": {
+    "name": "SimplyHired",
+    "lastRun": "2026-11-01T15:35:27.616Z",
+    "pages": 0,
+    "found": 0,
+    "status": "error",
+    "error": "blocked (403) at https://www.simplyhired.co.uk/search?q=&l=United+Kingdom&pn=1",
+    "new": 0
+  }
+}
