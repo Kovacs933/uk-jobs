@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-01T16:03:26.926Z",
+  "updated": "2026-11-01T16:51:26.247Z",
   "today": "2026-11-01",
   "ranges": [
     {
@@ -7,32 +7,32 @@
       "label": "Last 7 days",
       "from": "2026-10-26",
       "to": "2026-11-01",
-      "postings": 16539,
-      "titles": 9978
+      "postings": 16537,
+      "titles": 8275
     },
     {
       "id": "30",
       "label": "Last 30 days",
       "from": "2026-10-03",
       "to": "2026-11-01",
-      "postings": 23835,
-      "titles": 14576
+      "postings": 23832,
+      "titles": 11676
     },
     {
       "id": "90",
       "label": "Last 90 days",
       "from": "2026-08-04",
       "to": "2026-11-01",
-      "postings": 23960,
-      "titles": 14625
+      "postings": 23957,
+      "titles": 11711
     },
     {
       "id": "all",
       "label": "Everything collected",
       "from": "0000-00-00",
       "to": "2026-11-01",
-      "postings": 23960,
-      "titles": 14625
+      "postings": 23957,
+      "titles": 11711
     }
   ],
   "sites": {
@@ -43,7 +43,8 @@
       "pages": 6000,
       "found": 162000,
       "status": "ok",
-      "new": 10018
+      "new": 10018,
+      "since": "2026-11-01"
     },
     "workhub": {
       "name": "GOV.UK Work Hub",
@@ -52,7 +53,8 @@
       "found": 0,
       "status": "error",
       "error": "blocked (403) at https://www.jobs.service.gov.uk/jobs/search?sortOption=DATE&resultsPerPage=30&pageNumber=1",
-      "new": 0
+      "new": 0,
+      "disabled": "blocked from GitHub's servers"
     },
     "nhs": {
       "name": "NHS Jobs",
@@ -61,7 +63,8 @@
       "pages": 1077,
       "found": 10770,
       "status": "ok",
-      "new": 10770
+      "new": 10770,
+      "since": "2026-11-01"
     },
     "charityjob": {
       "name": "CharityJob",
@@ -70,7 +73,8 @@
       "pages": 118,
       "found": 1753,
       "status": "ok",
-      "new": 1753
+      "new": 1753,
+      "since": "2026-11-01"
     },
     "jobsacuk": {
       "name": "jobs.ac.uk",
@@ -79,7 +83,8 @@
       "pages": 59,
       "found": 1450,
       "status": "ok",
-      "new": 1450
+      "new": 1450,
+      "since": "2026-11-01"
     },
     "simplyhired": {
       "name": "SimplyHired",
@@ -88,7 +93,8 @@
       "found": 0,
       "status": "error",
       "error": "blocked (403) at https://www.simplyhired.co.uk/search?q=&l=United+Kingdom&pn=1",
-      "new": 0
+      "new": 0,
+      "disabled": "blocked from GitHub's servers"
     }
   }
 }

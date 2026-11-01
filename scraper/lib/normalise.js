@@ -1,5 +1,5 @@
-// Cleaning job titles and employer names so the same job counts together.
-// The front end (site/app.js) has a copy of titleKey and shardOf: keep them in step.
+// Cleaning job titles and employer names so the same job counts together (grouping repeated
+// titles is in titles.js). The front end (site/app.js) has a copy of shardOf: keep them in step.
 
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -18,20 +18,17 @@ export function cleanTitle(title, location) {
   return t || title.trim();
 }
 
-/** Grouping key for a job title: case, punctuation and spacing don't matter. */
-export function titleKey(title) {
-  return title.toLowerCase().replace(/[^a-z0-9+#]+/g, ' ').trim();
-}
-
-/** Grouping key for an employer: also ignores "Ltd", "Limited", "plc" and the like. */
+/**
+ * Grouping key for an employer: ignores "Ltd", "Limited", "plc" and the like, and spaces
+ * ("Appcastenterprise" and "Appcast Enterprise" are one account).
+ */
 export function employerKey(name) {
   return name
     .toLowerCase()
     .replace(/&/g, ' and ')
     .replace(/[^a-z0-9]+/g, ' ')
     .replace(/\b(ltd|limited|plc|llp|inc|uk|the|group)\b/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+    .replace(/\s+/g, '');
 }
 
 export const SHARDS = 64;

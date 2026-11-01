@@ -225,6 +225,11 @@ tr.employers td {
   letter-spacing: 0.04em;
 }
 
+.variants {
+  margin: 0 0 12px;
+  font-size: 0.92rem;
+}
+
 .more {
   display: block;
   margin: 16px auto 0;

@@ -3,6 +3,7 @@
 // Each site: id, name, url (home page), pageUrl(n) for page n of its UK-wide listing,
 // parse(html, now) -> { listFound, jobs: [{ id, title, employer, location, postedAt }] },
 // sortedByDate (newest first, so a crawl can stop at older jobs), maxPages and delayMs.
+// A site with `disabled: "<reason>"` is skipped by the crawl and listed as not collected.
 //
 // Not collected, and why (Nov 2026):
 //   Indeed, Glassdoor, CV-Library, Hiring Cafe - answer with a block page or bot check;
@@ -51,6 +52,8 @@ const workHub = {
   id: 'workhub',
   name: 'GOV.UK Work Hub',
   url: 'https://www.jobs.service.gov.uk',
+  // answers 403 to GitHub's servers; Edward chose to leave it out (Nov 2026). The code stays for later.
+  disabled: "blocked from GitHub's servers",
   // "Most recent" is only roughly by date: a page of June adverts can sit among 31 October ones
   sortedByDate: true,
   oldPagesToStop: 15,
@@ -174,6 +177,8 @@ const simplyHired = {
   id: 'simplyhired',
   name: 'SimplyHired',
   url: 'https://www.simplyhired.co.uk',
+  // answers 403 to GitHub's servers; Edward chose to leave it out (Nov 2026). The code stays for later.
+  disabled: "blocked from GitHub's servers",
   // the listing is very large and not in date order, so only the first pages are read each day
   sortedByDate: false,
   maxPages: 300,

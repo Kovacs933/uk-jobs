@@ -3,9 +3,9 @@
 (function () {
   const PAGE_SIZE = 200;
   const SHARDS = 64;
+  const VARIANTS_SHOWN = 8;
 
-  // copies of titleKey and shardOf in scraper/lib/normalise.js: keep them in step
-  const titleKey = (title) => title.toLowerCase().replace(/[^a-z0-9+#]+/g, ' ').trim();
+  // copy of shardOf in scraper/lib/normalise.js: keep them in step
   function shardOf(key) {
     let hash = 0x811c9dc5;
     for (let i = 0; i < key.length; i++) {
@@ -57,15 +57,21 @@
   }
 
   function renderSites() {
+    const sites = Object.values(state.meta.sites);
+    // collected sites first, switched-off ones last
+    sites.sort((a, b) => Boolean(a.disabled) - Boolean(b.disabled));
     els.sites.replaceChildren(
-      ...Object.values(state.meta.sites).map((site) => {
+      ...sites.map((site) => {
         const li = document.createElement('li');
         const when = site.lastRun ? new Date(site.lastRun).toLocaleDateString('en-GB') : 'never';
-        li.textContent =
-          site.status === 'ok'
-            ? `${site.name}: ${numberFormat.format(site.found)} jobs read, ${numberFormat.format(site.new)} new (${when})`
-            : `${site.name}: last crawl failed (${when})`;
-        if (site.status !== 'ok') li.className = 'status-error';
+        const since = site.since ? `, collected since ${formatDay(site.since)}` : '';
+        if (site.disabled) li.textContent = `${site.name}: not collected (${site.disabled})`;
+        else if (site.status === 'ok')
+          li.textContent = `${site.name}: ${numberFormat.format(site.found)} jobs read, ${numberFormat.format(site.new)} new (${when})${since}`;
+        else {
+          li.textContent = `${site.name}: last crawl failed (${when})${since}`;
+          li.className = 'status-error';
+        }
         return li;
       }),
     );
@@ -73,9 +79,10 @@
 
   function applyFilterAndSort() {
     const words = els.search.value.toLowerCase().split(/\s+/).filter(Boolean);
+    // a row also matches the words of its other spellings ("bank", "picu")
     const list = words.length
-      ? state.titles.filter(([title]) => {
-          const lower = title.toLowerCase();
+      ? state.titles.filter(([title, , , also]) => {
+          const lower = `${title} ${also ?? ''}`.toLowerCase();
           return words.every((w) => lower.includes(w));
         })
       : state.titles.slice();
@@ -103,7 +110,7 @@
     const max = state.filtered.reduce((m, [, count]) => Math.max(m, count), 1);
     const fragment = document.createDocumentFragment();
     const next = state.filtered.slice(state.shown, state.shown + PAGE_SIZE);
-    next.forEach(([title, count], i) => {
+    next.forEach(([title, count, key], i) => {
       const tr = document.createElement('tr');
       tr.className = 'title-row';
       const rank = document.createElement('td');
@@ -123,7 +130,7 @@
       num.className = 'num';
       num.textContent = numberFormat.format(count);
       tr.append(rank, cell, num);
-      tr.addEventListener('click', () => toggleEmployers(tr, button, title));
+      tr.addEventListener('click', () => toggleEmployers(tr, button, title, key));
       fragment.append(tr);
     });
     els.rows.append(fragment);
@@ -133,7 +140,30 @@
     els.more.textContent = `Show ${numberFormat.format(Math.min(PAGE_SIZE, left))} more of ${numberFormat.format(left)}`;
   }
 
-  async function toggleEmployers(tr, button, title) {
+  function countList(items) {
+    const ul = document.createElement('ul');
+    ul.className = 'employer-list';
+    for (const [name, count] of items) {
+      const li = document.createElement('li');
+      const label = document.createElement('span');
+      label.textContent = name;
+      const n = document.createElement('span');
+      n.className = 'count';
+      n.textContent = numberFormat.format(count);
+      li.append(label, n);
+      ul.append(li);
+    }
+    return ul;
+  }
+
+  function heading(text) {
+    const p = document.createElement('p');
+    p.className = 'employers-heading';
+    p.textContent = text;
+    return p;
+  }
+
+  async function toggleEmployers(tr, button, title, key) {
     const open = tr.nextElementSibling?.classList.contains('employers');
     if (open) {
       tr.nextElementSibling.remove();
@@ -149,26 +179,26 @@
     row.append(td);
     tr.after(row);
 
-    const key = titleKey(title);
+    // titles files from before rows had keys: the old key was the lower-cased title
+    if (!key) key = title.toLowerCase().replace(/[^a-z0-9+#]+/g, ' ').trim();
     try {
       const shard = await getJson(`employers-${state.range}-${shardOf(key)}.json`);
-      const employers = shard[key] ?? [];
-      const heading = document.createElement('p');
-      heading.className = 'employers-heading';
-      heading.textContent = `Employers advertising “${title}”`;
-      const ul = document.createElement('ul');
-      ul.className = 'employer-list';
-      for (const [name, count] of employers) {
-        const li = document.createElement('li');
-        const label = document.createElement('span');
-        label.textContent = name;
-        const n = document.createElement('span');
-        n.className = 'count';
-        n.textContent = numberFormat.format(count);
-        li.append(label, n);
-        ul.append(li);
+      // shards from before variants were [[employer, n], ...] per title
+      const entry = shard[key];
+      const employers = Array.isArray(entry) ? entry : entry?.e ?? [];
+      const variants = Array.isArray(entry) ? [] : entry?.v ?? [];
+      const parts = [];
+      if (variants.length) {
+        parts.push(heading('Also advertised as'));
+        const p = document.createElement('p');
+        p.className = 'variants';
+        const shown = variants.slice(0, VARIANTS_SHOWN).map(([name, n]) => `${name} (${numberFormat.format(n)})`);
+        const more = variants.length - VARIANTS_SHOWN;
+        p.textContent = shown.join(' · ') + (more > 0 ? ` · +${numberFormat.format(more)} more` : '');
+        parts.push(p);
       }
-      td.replaceChildren(heading, ul);
+      parts.push(heading(`Employers advertising “${title}”`), countList(employers));
+      td.replaceChildren(...parts);
     } catch (error) {
       td.textContent = `Couldn't load the employers (${error.message}).`;
     }

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { findPostedDate, parsePostedText } from './lib/postedDate.js';
-import { cleanTitle, employerKey, shardOf, titleKey } from './lib/normalise.js';
+import { cleanTitle, employerKey, shardOf } from './lib/normalise.js';
 import { parseDocument } from './lib/dom.js';
 import { SITES } from './sites/index.js';
 
@@ -37,10 +37,12 @@ test('cleanTitle drops salaries and the job town', () => {
   assert.equal(cleanTitle('  Support   Worker  ', undefined), 'Support Worker');
 });
 
-test('grouping keys ignore case, punctuation and company suffixes', () => {
-  assert.equal(titleKey('Support Worker'), titleKey('support worker!'));
+test('employer keys ignore case, punctuation, spaces and company suffixes', () => {
   assert.equal(employerKey('Acme Care Ltd.'), employerKey('ACME CARE LIMITED'));
   assert.equal(employerKey('Smith & Sons'), employerKey('Smith and Sons'));
+  // one ad platform account under two spellings
+  assert.equal(employerKey('Appcastenterprise'), employerKey('Appcast Enterprise'));
+  assert.notEqual(employerKey('Acme Care'), employerKey('Acme Homes'));
   const shard = shardOf('support worker');
   assert.ok(shard >= 0 && shard < 64);
 });

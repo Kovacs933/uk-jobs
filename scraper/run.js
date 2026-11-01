@@ -107,7 +107,8 @@ async function crawlSite(site, { seen, stopDay }) {
   return { postings, result };
 }
 
-const sites = SITES.filter((site) => !onlySite || site.id === onlySite);
+// a switched-off site runs only when asked for by name
+const sites = SITES.filter((site) => (onlySite ? site.id === onlySite : !site.disabled));
 if (sites.length === 0) {
   console.error(`Unknown site "${onlySite}". Sites: ${SITES.map((s) => s.id).join(', ')}`);
   process.exit(1);
