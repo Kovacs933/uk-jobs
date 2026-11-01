@@ -1,0 +1,98 @@
+{
+  "info": {
+    "license": {
+      "name": "Open Government License",
+      "url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+    }
+  },
+  "data": [
+    {
+      "@context": "http://schema.org",
+      "@type": "JobPosting",
+      "title": "Class Teacher",
+      "jobBenefits": null,
+      "datePosted": "2026-11-01",
+      "occupationalCategory": "teacher",
+      "directApply": null,
+      "employmentType": [
+        "FULL_TIME"
+      ],
+      "industry": "Education",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Chatteris",
+          "addressRegion": "East of England",
+          "streetAddress": "Farriers Gate",
+          "postalCode": "PE16 6EZ",
+          "addressCountry": "GB"
+        }
+      },
+      "baseSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "GBP",
+        "value": {
+          "@type": "QuantitativeValue",
+          "value": "£31,650.00 - £49,084.00 Annually (FTE)",
+          "unitText": "YEAR"
+        }
+      },
+      "url": "https://teaching-vacancies.service.gov.uk/jobs/class-teacher-f5bacdfc-e924-477b-a5e0-d0e8102cba11",
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Glebelands Primary Academy",
+        "sameAs": "http://www.glebelands.cambs.sch.uk/",
+        "identifier": "143976",
+        "description": null,
+        "logo": "/assets/images/govuk-icon-180-e3675089.png"
+      },
+      "validThrough": "2026-11-16T12:00:00+00:00"
+    },
+    {
+      "@context": "http://schema.org",
+      "@type": "JobPosting",
+      "title": "Caretaker",
+      "jobBenefits": null,
+      "datePosted": "2026-11-01",
+      "occupationalCategory": "catering_cleaning_and_site_management",
+      "directApply": false,
+      "employmentType": [
+        "FULL_TIME"
+      ],
+      "industry": "Education",
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Edgware",
+          "addressRegion": "London",
+          "streetAddress": "Collier Drive",
+          "postalCode": "HA8 5RU",
+          "addressCountry": "GB"
+        }
+      },
+      "url": "https://teaching-vacancies.service.gov.uk/jobs/caretaker-stag-lane-primary-school",
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "Stag Lane Primary School",
+        "sameAs": "http://www.staglaneprimary.co.uk",
+        "identifier": "102209",
+        "description": null,
+        "logo": "/assets/images/govuk-icon-180-e3675089.png"
+      },
+      "validThrough": "2026-11-13T15:00:00+00:00"
+    }
+  ],
+  "links": {
+    "self": "https://teaching-vacancies.service.gov.uk/api/v1/jobs.json?page=1",
+    "first": "https://teaching-vacancies.service.gov.uk/api/v1/jobs.json?page=1",
+    "last": "https://teaching-vacancies.service.gov.uk/api/v1/jobs.json?page=64",
+    "prev": null,
+    "next": "https://teaching-vacancies.service.gov.uk/api/v1/jobs.json?page=2"
+  },
+  "meta": {
+    "totalPages": 64,
+    "count": 6354
+  }
+}

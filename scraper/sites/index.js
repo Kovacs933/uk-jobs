@@ -173,6 +173,45 @@ const jobsAcUk = {
   },
 };
 
+const teachingVacancies = {
+  id: 'teachingvacancies',
+  name: 'Teaching Vacancies',
+  url: 'https://teaching-vacancies.service.gov.uk',
+  // the government's own JSON feed of every live school job (about 64 pages of 100), reused under
+  // the Open Government Licence. It isn't strictly newest first, so every page is read each day.
+  sortedByDate: false,
+  maxPages: 100,
+  concurrency: 2,
+  delayMs: 1000,
+  accept: 'application/json',
+  pageUrl: (n) => `https://teaching-vacancies.service.gov.uk/api/v1/jobs.json?page=${n}`,
+  parse(body) {
+    let feed;
+    try {
+      feed = JSON.parse(body);
+    } catch {
+      // not JSON: a block or error page
+      return { listFound: false, jobs: [], cards: 0 };
+    }
+    if (!Array.isArray(feed?.data)) return { listFound: false, jobs: [], cards: 0 };
+    const jobs = [];
+    for (const item of feed.data) {
+      const place = [item.jobLocation].flat()[0]?.address;
+      const job = {
+        // ex: https://teaching-vacancies.service.gov.uk/jobs/class-teacher-f5bacdfc-e924-477b-a5e0-d0e8102cba11
+        id: item.url?.split('/').filter(Boolean).pop(),
+        title: item.title?.replace(/\s+/g, ' ').trim(),
+        employer: item.hiringOrganization?.name?.replace(/\s+/g, ' ').trim(),
+        location: place?.addressLocality ?? undefined,
+        // ex: "2026-10-30"
+        postedAt: /^\d{4}-\d{2}-\d{2}/.test(item.datePosted ?? '') ? `${item.datePosted.slice(0, 10)}T12:00:00.000Z` : undefined,
+      };
+      if (job.id && job.title && job.employer) jobs.push(job);
+    }
+    return { listFound: true, jobs, cards: feed.data.length };
+  },
+};
+
 const simplyHired = {
   id: 'simplyhired',
   name: 'SimplyHired',
@@ -199,4 +238,4 @@ const simplyHired = {
   },
 };
 
-export const SITES = [reed, workHub, nhsJobs, charityJob, jobsAcUk, simplyHired];
+export const SITES = [reed, workHub, nhsJobs, charityJob, jobsAcUk, teachingVacancies, simplyHired];

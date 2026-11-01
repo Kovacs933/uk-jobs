@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { findPostedDate, parsePostedText } from './lib/postedDate.js';
 import { cleanTitle, employerKey, shardOf } from './lib/normalise.js';
@@ -68,6 +69,25 @@ test('Reed reads only jobs added in the last three days', () => {
   const reed = SITES.find((s) => s.id === 'reed');
   assert.equal(reed.pageUrl(2), 'https://www.reed.co.uk/jobs?dateCreatedOffSet=lastthreedays&pageno=2');
   assert.equal(reed.seenPagesToStop, 3);
+});
+
+test('Teaching Vacancies parser reads the JSON feed', () => {
+  const site = SITES.find((s) => s.id === 'teachingvacancies');
+  // two jobs from the live feed (1 Nov 2026), without their advert text
+  const sample = readFileSync(new URL('./fixtures/teaching-vacancies.json', import.meta.url), 'utf8');
+  const { listFound, jobs, cards } = site.parse(sample, now);
+  assert.equal(listFound, true);
+  assert.equal(cards, 2);
+  assert.deepEqual(jobs[0], {
+    id: 'class-teacher-f5bacdfc-e924-477b-a5e0-d0e8102cba11',
+    title: 'Class Teacher',
+    employer: 'Glebelands Primary Academy',
+    location: 'Chatteris',
+    postedAt: '2026-11-01T12:00:00.000Z',
+  });
+  assert.equal(jobs[1].employer, 'Stag Lane Primary School');
+  // past the last page the feed has an empty list
+  assert.deepEqual(site.parse('{"data":[]}', now), { listFound: true, jobs: [], cards: 0 });
 });
 
 test('Work Hub parser skips copied NHS Jobs adverts', () => {

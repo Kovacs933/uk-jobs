@@ -49,7 +49,7 @@ async function crawlSite(site, { seen, stopDay }) {
       numbers.map(async (n, i) => {
         await sleep(i * STAGGER_MS);
         try {
-          return { n, parsed: site.parse(await fetchPage(site.pageUrl(n)), now) };
+          return { n, parsed: site.parse(await fetchPage(site.pageUrl(n), { accept: site.accept }), now) };
         } catch (error) {
           return { n, error };
         }

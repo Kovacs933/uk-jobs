@@ -10,12 +10,13 @@ export class BlockedError extends Error {}
 
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function fetchPage(url) {
+/** `accept` is for sites that serve a JSON feed instead of web pages. */
+export async function fetchPage(url, { accept = 'text/html,application/xhtml+xml' } = {}) {
   let lastError;
   for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
     try {
       const res = await fetch(url, {
-        headers: { 'user-agent': UA, 'accept-language': 'en-GB,en;q=0.9', accept: 'text/html,application/xhtml+xml' },
+        headers: { 'user-agent': UA, 'accept-language': 'en-GB,en;q=0.9', accept },
         signal: AbortSignal.timeout(TIMEOUT_MS),
       });
       if (res.status === 403) throw new BlockedError(`blocked (403) at ${url}`);
