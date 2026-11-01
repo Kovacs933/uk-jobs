@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UK Job Postings</title>
+    <meta name="description" content="Every job title advertised in the UK, ranked by how many postings it has." />
+    <meta name="robots" content="noindex" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap">
+        <h1>UK job postings</h1>
+        <p class="summary" id="summary" aria-live="polite">Loading…</p>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <div class="controls">
+        <label class="search">
+          <span class="visually-hidden">Search job titles</span>
+          <input id="search" type="search" placeholder="Search job titles, e.g. support worker" autocomplete="off" />
+        </label>
+        <label class="range">
+          <span>Posted in</span>
+          <select id="range"></select>
+        </label>
+      </div>
+
+      <p class="result-count" id="resultCount" aria-live="polite"></p>
+
+      <table class="titles">
+        <thead>
+          <tr>
+            <th class="rank" scope="col">#</th>
+            <th scope="col" aria-sort="none"><button type="button" data-sort="title">Job title</button></th>
+            <th class="num" scope="col" aria-sort="descending"><button type="button" data-sort="count">Postings</button></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p class="empty" id="empty" hidden>No job titles match that search.</p>
+      <button class="more" id="more" type="button" hidden>Show more</button>
+    </main>
+
+    <footer class="wrap foot">
+      <h2>Where the jobs come from</h2>
+      <ul id="sites"></ul>
+      <p>
+        Collected once a day from the sites above. The same advert on two sites (same title, employer and
+        posting date) is counted once. Not included: Indeed, Glassdoor, CV-Library and Hiring Cafe block
+        automated visits; LinkedIn, Totaljobs and Gumtree ask crawlers not to read their search pages; Robert
+        Half needs a full browser.
+      </p>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

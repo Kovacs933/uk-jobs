@@ -1,0 +1,13 @@
+{
+  "name": "uk-jobs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "scrape": "node scraper/run.js",
+    "build-data": "node scraper/buildSiteData.js",
+    "test": "node --test \"scraper/**/*.test.js\""
+  },
+  "dependencies": {
+    "linkedom": "^0.18.15"
+  }
+}

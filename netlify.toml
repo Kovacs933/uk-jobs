@@ -1,0 +1,7 @@
+# Netlify serves the site/ folder as it is, with no build step.
+# The site reads its data from GitHub (see site/config.js), so the daily data commits don't need a
+# new deploy: Netlify skips any commit that doesn't change site/ (each deploy uses free-plan credits).
+[build]
+  publish = "site"
+  command = ""
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- site/ netlify.toml"
