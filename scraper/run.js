@@ -18,6 +18,10 @@ const option = (name) => {
 const onlySite = option('site');
 const pageLimit = option('pages') ? Number(option('pages')) : Infinity;
 const dryRun = args.includes('--dry');
+// pages read at the same time per site; each site sets its own, --concurrency overrides it for tests
+const concurrencyOverride = option('concurrency') ? Number(option('concurrency')) : undefined;
+// pages in a batch start this far apart, so a batch isn't a burst of simultaneous requests
+const STAGGER_MS = 150;
 
 const now = new Date();
 const today = isoDay(now);
@@ -31,40 +35,57 @@ async function crawlSite(site, { seen, stopDay }) {
   const postings = [];
   const result = { pages: 0, found: 0, status: 'ok' };
   const maxPages = Math.min(site.maxPages, pageLimit);
+  const concurrency = concurrencyOverride ?? site.concurrency;
+  let lastLogged = 0;
 
-  for (let n = 1; n <= maxPages; n++) {
-    let parsed;
-    try {
-      parsed = site.parse(await fetchPage(site.pageUrl(n)), now);
-    } catch (error) {
-      result.status = 'error';
-      result.error = error.message;
-      break;
-    }
-    result.pages = n;
-    if (!parsed.listFound || parsed.jobs.length === 0) {
-      // past the last page; on page 1 it means the layout changed or we were blocked
-      if (n === 1) {
+  // pages are fetched a few at a time but read in page order, so stopping works as it would one by one
+  batches: for (let first = 1; first <= maxPages; first += concurrency) {
+    const numbers = Array.from({ length: Math.min(concurrency, maxPages - first + 1) }, (_, i) => first + i);
+    const pages = await Promise.all(
+      numbers.map(async (n, i) => {
+        await sleep(i * STAGGER_MS);
+        try {
+          return { n, parsed: site.parse(await fetchPage(site.pageUrl(n)), now) };
+        } catch (error) {
+          return { n, error };
+        }
+      }),
+    );
+
+    for (const { n, parsed, error } of pages) {
+      if (error) {
         result.status = 'error';
-        result.error = 'no job list on page 1 (the site may have changed its layout)';
+        result.error = error.message;
+        break batches;
       }
-      break;
+      result.pages = n;
+      if (!parsed.listFound || parsed.jobs.length === 0) {
+        // past the last page; on page 1 it means the layout changed or we were blocked
+        if (n === 1) {
+          result.status = 'error';
+          result.error = 'no job list on page 1 (the site may have changed its layout)';
+        }
+        break batches;
+      }
+
+      let newestDay = '';
+      for (const job of parsed.jobs) {
+        result.found++;
+        // a job with no posting date counts from the day we first saw it
+        const day = job.postedAt ? job.postedAt.slice(0, 10) : today;
+        if (day > newestDay) newestDay = day;
+        const id = `${site.id}-${job.id}`;
+        if (seen.has(id)) continue;
+        seen.add(id);
+        postings.push({ id, s: site.id, t: cleanTitle(job.title, job.location), e: job.employer, d: day });
+      }
+      if (site.sortedByDate && newestDay < stopDay) break batches;
     }
 
-    let newestDay = '';
-    for (const job of parsed.jobs) {
-      result.found++;
-      // a job with no posting date counts from the day we first saw it
-      const day = job.postedAt ? job.postedAt.slice(0, 10) : today;
-      if (day > newestDay) newestDay = day;
-      const id = `${site.id}-${job.id}`;
-      if (seen.has(id)) continue;
-      seen.add(id);
-      postings.push({ id, s: site.id, t: cleanTitle(job.title, job.location), e: job.employer, d: day });
+    if (result.pages - lastLogged >= 100) {
+      lastLogged = result.pages;
+      log(site, `page ${result.pages}, ${postings.length} new so far`);
     }
-
-    if (site.sortedByDate && newestDay < stopDay) break;
-    if (n % 100 === 0) log(site, `page ${n}, ${postings.length} new so far`);
     await sleep(site.delayMs);
   }
 

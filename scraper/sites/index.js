@@ -1,4 +1,4 @@
-// Every job site we collect from. Selectors come from Foundation's ukBoards.ts (checked Oct 2026).
+﻿// Every job site we collect from. Selectors come from Foundation's ukBoards.ts (checked Oct 2026).
 //
 // Each site: id, name, url (home page), pageUrl(n) for page n of its UK-wide listing,
 // parse(html, now) -> { listFound, jobs: [{ id, title, employer, location, postedAt }] },
@@ -20,7 +20,8 @@ const reed = {
   // Reed can't be sorted by date from a link, so the whole listing is read every day
   sortedByDate: false,
   maxPages: 6000,
-  delayMs: 500,
+  concurrency: 6,
+  delayMs: 250,
   pageUrl: (n) => `https://www.reed.co.uk/jobs?pageno=${n}`,
   parse(html, now) {
     const document = parseDocument(html);
@@ -49,6 +50,7 @@ const workHub = {
   url: 'https://www.jobs.service.gov.uk',
   sortedByDate: true,
   maxPages: 4000,
+  concurrency: 4,
   delayMs: 500,
   pageUrl: (n) => `https://www.jobs.service.gov.uk/jobs/search?sortOption=DATE&resultsPerPage=30&pageNumber=${n}`,
   parse(html, now) {
@@ -78,6 +80,7 @@ const nhsJobs = {
   url: 'https://www.jobs.nhs.uk',
   sortedByDate: true,
   maxPages: 2000,
+  concurrency: 4,
   delayMs: 500,
   pageUrl: (n) => `https://www.jobs.nhs.uk/candidate/search/results?sort=publicationDateDesc&page=${n}`,
   parse(html, now) {
@@ -110,7 +113,8 @@ const charityJob = {
   // newest first; the site stops listing after about 110 pages
   sortedByDate: true,
   maxPages: 200,
-  delayMs: 700,
+  concurrency: 3,
+  delayMs: 500,
   pageUrl: (n) => `https://www.charityjob.co.uk/jobs?page=${n}`,
   parse(html, now) {
     const document = parseDocument(html);
@@ -141,7 +145,8 @@ const jobsAcUk = {
   url: 'https://www.jobs.ac.uk',
   sortedByDate: false,
   maxPages: 400,
-  delayMs: 700,
+  concurrency: 3,
+  delayMs: 500,
   pageUrl: (n) => `https://www.jobs.ac.uk/search/?sortOrder=1&pageSize=25&startIndex=${(n - 1) * 25 + 1}`,
   parse(html, now) {
     const document = parseDocument(html);
@@ -167,7 +172,8 @@ const simplyHired = {
   // the listing is very large and not in date order, so only the first pages are read each day
   sortedByDate: false,
   maxPages: 300,
-  delayMs: 700,
+  concurrency: 3,
+  delayMs: 500,
   pageUrl: (n) => `https://www.simplyhired.co.uk/search?q=&l=United+Kingdom&pn=${n}`,
   parse(html, now) {
     const document = parseDocument(html);
