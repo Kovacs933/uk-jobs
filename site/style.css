@@ -269,6 +269,10 @@ tr.employers td {
   padding-left: 18px;
 }
 
+.foot a {
+  color: var(--accent);
+}
+
 .status-error {
   color: #b3261e;
 }
