@@ -74,6 +74,17 @@ test('Work Hub parser skips copied NHS Jobs adverts', () => {
   assert.equal(jobs[0].postedAt.slice(0, 10), '2026-10-06');
 });
 
+test('a page of only skipped cards still counts as a page of the list', () => {
+  const workHub = SITES.find((s) => s.id === 'workhub');
+  const html = `<div data-testid="searchResultCard-9">
+    <a data-testid="jobTitle-9" href="/jobs/9">Nurse</a>
+    <div data-testid="searchResultCardEmployer"><span>NHS Jobs</span><span> - Leeds</span></div></div>`;
+  const result = workHub.parse(html, now);
+  assert.equal(result.jobs.length, 0);
+  assert.equal(result.cards, 1);
+  assert.equal(result.listFound, true);
+});
+
 test('a page with no job list is reported, not read as empty', () => {
   for (const site of SITES) {
     assert.equal(site.parse('<html><body><h1>Access denied</h1></body></html>', now).listFound, false, site.id);

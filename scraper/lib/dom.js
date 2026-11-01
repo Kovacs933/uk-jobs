@@ -24,7 +24,7 @@ export function looksLikeNoResults(document) {
  * `listFound` is false when the page has no job list at all (a layout change or a block page).
  */
 export function cardsToResult(document, cards, parseCard) {
-  if (cards.length === 0) return { listFound: looksLikeNoResults(document), jobs: [] };
+  if (cards.length === 0) return { listFound: looksLikeNoResults(document), jobs: [], cards: 0 };
   const jobs = [];
   for (const card of cards) {
     try {
@@ -34,5 +34,6 @@ export function cardsToResult(document, cards, parseCard) {
       // one broken card shouldn't lose the rest of the page
     }
   }
-  return { listFound: true, jobs };
+  // `cards` is how many job cards the page had, which can be more than `jobs` when some are skipped
+  return { listFound: true, jobs, cards: cards.length };
 }

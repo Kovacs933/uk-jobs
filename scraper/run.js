@@ -37,6 +37,7 @@ async function crawlSite(site, { seen, stopDay }) {
   const maxPages = Math.min(site.maxPages, pageLimit);
   const concurrency = concurrencyOverride ?? site.concurrency;
   let lastLogged = 0;
+  let oldPages = 0;
 
   // pages are fetched a few at a time but read in page order, so stopping works as it would one by one
   batches: for (let first = 1; first <= maxPages; first += concurrency) {
@@ -59,7 +60,8 @@ async function crawlSite(site, { seen, stopDay }) {
         break batches;
       }
       result.pages = n;
-      if (!parsed.listFound || parsed.jobs.length === 0) {
+      // a page whose cards were all skipped (Work Hub copies of NHS Jobs adverts) isn't the end
+      if (!parsed.listFound || parsed.cards === 0) {
         // past the last page; on page 1 it means the layout changed or we were blocked
         if (n === 1) {
           result.status = 'error';
@@ -79,7 +81,10 @@ async function crawlSite(site, { seen, stopDay }) {
         seen.add(id);
         postings.push({ id, s: site.id, t: cleanTitle(job.title, job.location), e: job.employer, d: day });
       }
-      if (site.sortedByDate && newestDay < stopDay) break batches;
+      // sites that list roughly newest first can still put a few old adverts early, so stop only
+      // after several old pages in a row
+      oldPages = newestDay && newestDay < stopDay ? oldPages + 1 : 0;
+      if (site.sortedByDate && oldPages >= (site.oldPagesToStop ?? 3)) break batches;
     }
 
     if (result.pages - lastLogged >= 100) {

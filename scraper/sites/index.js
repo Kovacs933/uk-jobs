@@ -27,7 +27,7 @@ const reed = {
     const document = parseDocument(html);
     const cards = Array.from(document.querySelectorAll('article[data-qa="job-card"]'));
     if (cards.length === 0 && document.querySelector('[data-qa="alert-no-results-criteria"]')) {
-      return { listFound: true, jobs: [] };
+      return { listFound: true, jobs: [], cards: 0 };
     }
     return cardsToResult(document, cards, (el) => {
       const titleEl = el.querySelector('a[data-qa="job-card-title"]');
@@ -48,7 +48,9 @@ const workHub = {
   id: 'workhub',
   name: 'GOV.UK Work Hub',
   url: 'https://www.jobs.service.gov.uk',
+  // "Most recent" is only roughly by date: a page of June adverts can sit among 31 October ones
   sortedByDate: true,
+  oldPagesToStop: 15,
   maxPages: 4000,
   concurrency: 4,
   delayMs: 500,
