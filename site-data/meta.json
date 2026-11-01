@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-01T16:51:26.247Z",
+  "updated": "2026-11-01T16:57:27.563Z",
   "today": "2026-11-01",
   "ranges": [
     {
@@ -7,43 +7,43 @@
       "label": "Last 7 days",
       "from": "2026-10-26",
       "to": "2026-11-01",
-      "postings": 16537,
-      "titles": 8275
+      "postings": 17148,
+      "titles": 8572
     },
     {
       "id": "30",
       "label": "Last 30 days",
       "from": "2026-10-03",
       "to": "2026-11-01",
-      "postings": 23832,
-      "titles": 11676
+      "postings": 29354,
+      "titles": 13902
     },
     {
       "id": "90",
       "label": "Last 90 days",
       "from": "2026-08-04",
       "to": "2026-11-01",
-      "postings": 23957,
-      "titles": 11711
+      "postings": 30536,
+      "titles": 14344
     },
     {
       "id": "all",
       "label": "Everything collected",
       "from": "0000-00-00",
       "to": "2026-11-01",
-      "postings": 23957,
-      "titles": 11711
+      "postings": 30679,
+      "titles": 14388
     }
   ],
   "sites": {
     "reed": {
       "name": "Reed",
-      "lastRun": "2026-11-01T15:35:27.616Z",
+      "lastRun": "2026-11-01T16:55:57.297Z",
       "lastOk": "2026-11-01",
-      "pages": 6000,
-      "found": 162000,
+      "pages": 302,
+      "found": 8113,
       "status": "ok",
-      "new": 10018,
+      "new": 58,
       "since": "2026-11-01"
     },
     "workhub": {
@@ -58,32 +58,32 @@
     },
     "nhs": {
       "name": "NHS Jobs",
-      "lastRun": "2026-11-01T15:35:27.616Z",
+      "lastRun": "2026-11-01T16:55:57.297Z",
       "lastOk": "2026-11-01",
-      "pages": 1077,
-      "found": 10770,
+      "pages": 99,
+      "found": 990,
       "status": "ok",
-      "new": 10770,
+      "new": 0,
       "since": "2026-11-01"
     },
     "charityjob": {
       "name": "CharityJob",
-      "lastRun": "2026-11-01T15:35:27.616Z",
+      "lastRun": "2026-11-01T16:55:57.297Z",
       "lastOk": "2026-11-01",
-      "pages": 118,
-      "found": 1753,
+      "pages": 17,
+      "found": 255,
       "status": "ok",
-      "new": 1753,
+      "new": 0,
       "since": "2026-11-01"
     },
     "jobsacuk": {
       "name": "jobs.ac.uk",
-      "lastRun": "2026-11-01T15:35:27.616Z",
+      "lastRun": "2026-11-01T16:55:57.297Z",
       "lastOk": "2026-11-01",
-      "pages": 59,
-      "found": 1450,
+      "pages": 102,
+      "found": 2524,
       "status": "ok",
-      "new": 1450,
+      "new": 1074,
       "since": "2026-11-01"
     },
     "simplyhired": {
@@ -95,6 +95,16 @@
       "error": "blocked (403) at https://www.simplyhired.co.uk/search?q=&l=United+Kingdom&pn=1",
       "new": 0,
       "disabled": "blocked from GitHub's servers"
+    },
+    "teachingvacancies": {
+      "name": "Teaching Vacancies",
+      "lastRun": "2026-11-01T16:55:57.297Z",
+      "lastOk": "2026-11-01",
+      "pages": 65,
+      "found": 6354,
+      "status": "ok",
+      "new": 5594,
+      "since": "2026-11-01"
     }
   }
 }

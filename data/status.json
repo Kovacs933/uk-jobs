@@ -1,12 +1,12 @@
 {
   "reed": {
     "name": "Reed",
-    "lastRun": "2026-11-01T15:35:27.616Z",
+    "lastRun": "2026-11-01T16:55:57.297Z",
     "lastOk": "2026-11-01",
-    "pages": 6000,
-    "found": 162000,
+    "pages": 302,
+    "found": 8113,
     "status": "ok",
-    "new": 10018
+    "new": 58
   },
   "workhub": {
     "name": "GOV.UK Work Hub",
@@ -19,30 +19,30 @@
   },
   "nhs": {
     "name": "NHS Jobs",
-    "lastRun": "2026-11-01T15:35:27.616Z",
+    "lastRun": "2026-11-01T16:55:57.297Z",
     "lastOk": "2026-11-01",
-    "pages": 1077,
-    "found": 10770,
+    "pages": 99,
+    "found": 990,
     "status": "ok",
-    "new": 10770
+    "new": 0
   },
   "charityjob": {
     "name": "CharityJob",
-    "lastRun": "2026-11-01T15:35:27.616Z",
+    "lastRun": "2026-11-01T16:55:57.297Z",
     "lastOk": "2026-11-01",
-    "pages": 118,
-    "found": 1753,
+    "pages": 17,
+    "found": 255,
     "status": "ok",
-    "new": 1753
+    "new": 0
   },
   "jobsacuk": {
     "name": "jobs.ac.uk",
-    "lastRun": "2026-11-01T15:35:27.616Z",
+    "lastRun": "2026-11-01T16:55:57.297Z",
     "lastOk": "2026-11-01",
-    "pages": 59,
-    "found": 1450,
+    "pages": 102,
+    "found": 2524,
     "status": "ok",
-    "new": 1450
+    "new": 1074
   },
   "simplyhired": {
     "name": "SimplyHired",
@@ -52,5 +52,14 @@
     "status": "error",
     "error": "blocked (403) at https://www.simplyhired.co.uk/search?q=&l=United+Kingdom&pn=1",
     "new": 0
+  },
+  "teachingvacancies": {
+    "name": "Teaching Vacancies",
+    "lastRun": "2026-11-01T16:55:57.297Z",
+    "lastOk": "2026-11-01",
+    "pages": 65,
+    "found": 6354,
+    "status": "ok",
+    "new": 5594
   }
 }
