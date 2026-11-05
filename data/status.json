@@ -1,12 +1,12 @@
 {
   "reed": {
     "name": "Reed",
-    "lastRun": "2026-11-04T04:00:19.568Z",
-    "lastOk": "2026-11-04",
+    "lastRun": "2026-11-05T04:02:16.604Z",
+    "lastOk": "2026-11-05",
     "pages": 400,
     "found": 10800,
     "status": "ok",
-    "new": 4333
+    "new": 9188
   },
   "workhub": {
     "name": "GOV.UK Work Hub",
@@ -19,30 +19,30 @@
   },
   "nhs": {
     "name": "NHS Jobs",
-    "lastRun": "2026-11-04T04:00:19.568Z",
-    "lastOk": "2026-11-04",
-    "pages": 229,
-    "found": 2290,
+    "lastRun": "2026-11-05T04:02:16.604Z",
+    "lastOk": "2026-11-05",
+    "pages": 322,
+    "found": 3220,
     "status": "ok",
-    "new": 1178
+    "new": 1026
   },
   "charityjob": {
     "name": "CharityJob",
-    "lastRun": "2026-11-04T04:00:19.568Z",
-    "lastOk": "2026-11-04",
-    "pages": 24,
-    "found": 360,
+    "lastRun": "2026-11-05T04:02:16.604Z",
+    "lastOk": "2026-11-05",
+    "pages": 31,
+    "found": 465,
     "status": "ok",
-    "new": 131
+    "new": 105
   },
   "jobsacuk": {
     "name": "jobs.ac.uk",
-    "lastRun": "2026-11-04T04:00:19.568Z",
-    "lastOk": "2026-11-04",
-    "pages": 100,
-    "found": 2454,
+    "lastRun": "2026-11-05T04:02:16.604Z",
+    "lastOk": "2026-11-05",
+    "pages": 101,
+    "found": 2484,
     "status": "ok",
-    "new": 178
+    "new": 131
   },
   "simplyhired": {
     "name": "SimplyHired",
@@ -55,11 +55,11 @@
   },
   "teachingvacancies": {
     "name": "Teaching Vacancies",
-    "lastRun": "2026-11-04T04:00:19.568Z",
-    "lastOk": "2026-11-04",
-    "pages": 52,
-    "found": 5013,
+    "lastRun": "2026-11-05T04:02:16.604Z",
+    "lastOk": "2026-11-05",
+    "pages": 54,
+    "found": 5279,
     "status": "ok",
-    "new": 591
+    "new": 551
   }
 }
