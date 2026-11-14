@@ -1,49 +1,49 @@
 {
-  "updated": "2026-11-13T04:03:40.422Z",
-  "today": "2026-11-13",
+  "updated": "2026-11-14T04:01:15.145Z",
+  "today": "2026-11-14",
   "ranges": [
     {
       "id": "7",
       "label": "Last 7 days",
-      "from": "2026-11-07",
-      "to": "2026-11-13",
-      "postings": 28621,
-      "titles": 11085
+      "from": "2026-11-08",
+      "to": "2026-11-14",
+      "postings": 32765,
+      "titles": 12523
     },
     {
       "id": "30",
       "label": "Last 30 days",
-      "from": "2026-10-15",
-      "to": "2026-11-13",
-      "postings": 92617,
-      "titles": 31345
+      "from": "2026-10-16",
+      "to": "2026-11-14",
+      "postings": 96782,
+      "titles": 32266
     },
     {
       "id": "90",
       "label": "Last 90 days",
-      "from": "2026-08-16",
-      "to": "2026-11-13",
-      "postings": 98020,
-      "titles": 32955
+      "from": "2026-08-17",
+      "to": "2026-11-14",
+      "postings": 103026,
+      "titles": 34145
     },
     {
       "id": "all",
       "label": "Everything collected",
       "from": "0000-00-00",
-      "to": "2026-11-13",
-      "postings": 98267,
-      "titles": 33009
+      "to": "2026-11-14",
+      "postings": 103278,
+      "titles": 34202
     }
   ],
   "sites": {
     "reed": {
       "name": "Reed",
-      "lastRun": "2026-11-13T04:01:44.739Z",
-      "lastOk": "2026-11-13",
+      "lastRun": "2026-11-14T03:59:22.404Z",
+      "lastOk": "2026-11-14",
       "pages": 400,
       "found": 10800,
       "status": "ok",
-      "new": 4019,
+      "new": 3559,
       "since": "2026-11-01"
     },
     "workhub": {
@@ -58,17 +58,17 @@
     },
     "nhs": {
       "name": "NHS Jobs",
-      "lastRun": "2026-11-13T04:01:44.739Z",
-      "lastOk": "2026-11-13",
-      "pages": 319,
-      "found": 3190,
+      "lastRun": "2026-11-14T03:59:22.404Z",
+      "lastOk": "2026-11-14",
+      "pages": 294,
+      "found": 2940,
       "status": "ok",
-      "new": 1047,
+      "new": 847,
       "since": "2026-11-01"
     },
     "charityjob": {
       "name": "CharityJob",
-      "lastRun": "2026-11-13T04:01:44.739Z",
+      "lastRun": "2026-11-14T03:59:22.404Z",
       "lastOk": "2026-11-09",
       "pages": 0,
       "found": 0,
@@ -79,12 +79,12 @@
     },
     "jobsacuk": {
       "name": "jobs.ac.uk",
-      "lastRun": "2026-11-13T04:01:44.739Z",
-      "lastOk": "2026-11-13",
-      "pages": 106,
-      "found": 2616,
+      "lastRun": "2026-11-14T03:59:22.404Z",
+      "lastOk": "2026-11-14",
+      "pages": 108,
+      "found": 2669,
       "status": "ok",
-      "new": 180,
+      "new": 141,
       "since": "2026-11-01"
     },
     "simplyhired": {
@@ -99,12 +99,12 @@
     },
     "teachingvacancies": {
       "name": "Teaching Vacancies",
-      "lastRun": "2026-11-13T04:01:44.739Z",
-      "lastOk": "2026-11-13",
+      "lastRun": "2026-11-14T03:59:22.404Z",
+      "lastOk": "2026-11-14",
       "pages": 66,
-      "found": 6487,
+      "found": 6458,
       "status": "ok",
-      "new": 592,
+      "new": 469,
       "since": "2026-11-01"
     }
   }
